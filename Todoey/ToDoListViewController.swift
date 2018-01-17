@@ -10,13 +10,14 @@ import UIKit
 
 class ToDoListViewController: UITableViewController {
 
-    let itemArray = ["Find Idea", "Have Impact", "Be Curagious"]
+    var itemArray = ["Find Idea", "Have Impact", "Be Curagious"]
+    
     
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
     }
 
         //Mark - TableView Datasource Methods
@@ -37,7 +38,7 @@ class ToDoListViewController: UITableViewController {
     // Mark - TableView Delegate Methods
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print(indexPath.row)
+        
         if tableView.cellForRow(at: indexPath)?.accessoryType == .checkmark {
             tableView.cellForRow(at: indexPath)?.accessoryType = .none}
         else {
@@ -47,7 +48,28 @@ class ToDoListViewController: UITableViewController {
         
     }
     
-    
+    // Mark - Add New Item
+    @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
+        let alert = UIAlertController(title: "Add New ToDo", message: "", preferredStyle: .alert)
+        
+        let action = UIAlertAction(title: "Add Item", style: .default) {
+            (action) in
+            // What will happen once user clicked
+            let textField = alert.textFields![0].text!
+            self.itemArray.append(String(describing: textField))
+            self.tableView.reloadData()
+            
+        }
+        
+        alert.addTextField { (alertTextfield) in
+            alertTextfield.placeholder = "Enter new item!"
+            
+        }
+        
+        alert.addAction(action)
+        present(alert, animated: true, completion: nil)
+        
+    }
     
     
    
